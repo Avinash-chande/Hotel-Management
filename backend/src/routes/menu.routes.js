@@ -4,7 +4,7 @@ import {
     addMenu,
     getMenu,
     updateMenu,
-    deleteMenu
+    deleteMenu,
 } from '../controllers/menu.controllers.js'
 
 const router = Router()

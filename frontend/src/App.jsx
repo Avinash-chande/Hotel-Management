@@ -3,7 +3,6 @@ import AdminSignup from "./components/admin/Signup"
 import AdminLogin from "./components/admin/Login"
 import Update from "./components/admin/Update"
 import EditMenu from "./components/admin/EditMenu"
-import MenuList from "./components/admin/MenuList"
 import Home from "./components/user/Home"
 import NotFound from './components/NotFound'
 import ProtectedRoute from "./components/ProtectedRoute"
@@ -25,12 +24,11 @@ export default function App() {
           <Route path="admin/panels" element={<AdminPanels/>} />
           <Route path="/admin/update" element={<Update />} />
           <Route path="/admin/edit/:id" element={<EditMenu />} />
-          <Route path="/admin/list" element={<MenuList />} />
         </Route>
 
         {/*  Catch all wrong routes */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter >
+    </BrowserRouter>
   )
 }

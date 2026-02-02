@@ -5,7 +5,7 @@ import express from 'express'
 const app = express();
 
 app.use(cors({
-    origin: process.env.CORD_ORIGIN,
+    origin: process.env.CORS_ORIGIN,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 }))
@@ -15,13 +15,20 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
 app.use(cookieParser())
 
+
+
 //import routes
 import userRouter from './routes/user.routes.js'
 import menuRouter from './routes/menu.routes.js'
+import settingRouter from './routes/setting.routes.js'
+
 
 //declare the routes
 app.use("/api/auth", userRouter)
 app.use("/api/menu", menuRouter)
+
+app.use("/api/settings", settingRouter)
+
 
 
 // //http://localhost:3000/api/v1/users/admin/register

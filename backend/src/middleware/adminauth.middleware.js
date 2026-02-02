@@ -11,7 +11,7 @@ export const isAdmin = asyncHandler(async (req, res, next) => {
         req.cookies?.accessToken ||
         (authHeader?.startsWith("Bearer ") ? authHeader.split(" ")[1] : null)
 
-    // console.log(token)
+    console.log(token)
 
     if (!token) {
         throw new ApiErrors(401, "Unauthorized request")

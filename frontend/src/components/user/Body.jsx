@@ -81,39 +81,37 @@ export default function MenuUI() {
                 <div className="bg-white rounded-2xl shadow-lg p-6">
 
                     {/* Menu Card */}
-                    <div className="border rounded-xl p-5 mb-4 hover:shadow-md transition">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-xl font-semibold flex items-center gap-2">
-                                    राईस प्लेट
-                                    {/* <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-sm">
-                    ⭐
-                  </span> */}
-                                </h3>
+                    <div className="border rounded-xl p-5 mb-4">
+                        {menu.map((m) => (
+                            <div
+                                key={m._id}
+                                className="flex justify-between items-start rounded-xl "
+                            >
+                                <div className="w-full">
+                                    <h3 className="text-xl font-semibold">राईस प्लेट </h3>
 
-                                {/* <p className="text-sm text-gray-500 mt-1">
-                  ⭐ 4.9 · 7 ratings
-                </p> */}
+                                    <div className="flex gap-2 mt-2">
+                                        <span className="bg-gray-100 px-2 py-1 rounded-full text-xs">
+                                            Limited
+                                        </span>
+                                        <span className="bg-green-100 px-2 py-1 rounded-full text-xs">
+                                            {m.status}
+                                        </span>
+                                    </div>
 
-                                <div className="flex gap-2 mt-2">
-                                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                                        Unlimited
-                                    </span>
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                                        Available
-                                    </span>
+
+                                    <ul className="mt-3 text-sm text-gray-600 space-y-1">
+                                        {m.items?.map((val, i) => (
+                                            <li key={i}>• {val}</li>
+                                        ))}
+                                    </ul>
+
                                 </div>
-
-                                <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                                    <li>•रस्सा भाजी - मसाला वांग</li>
-                                    <li>• सुखी भाजी - बेसन पिटल</li>
-                                </ul>
+                                <div className="text-xl font-bold text-orange-600">
+                                    ₹60
+                                </div>
                             </div>
-
-                            <div className="text-xl font-bold text-orange-600">
-                                ₹80
-                            </div>
-                        </div>
+                        ))}
                     </div>
 
                     <div className="border rounded-xl p-5 mb-4">
@@ -191,6 +189,8 @@ export default function MenuUI() {
 
 
             {/* regular menu section */}
+
+
 
             <div className="max-w-7xl mx-auto px-4 mt-10">
                 <div className="bg-white rounded-2xl shadow-lg p-6">
@@ -381,7 +381,6 @@ export default function MenuUI() {
                     </div>
                 </div>
             </div>
-
 
 
 

@@ -40,7 +40,7 @@ export default function AdminSignup() {
         // localStorage.setItem("isAdminLoggedIn", "true") // MUST be string
 
         // redirect admin
-        nav("/admin/dashboard");
+        nav("/admin/panels");
       } else {
         setError(res.data.message || "You are not authorized to access the admin panel.");
       }
