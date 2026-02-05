@@ -1,26 +1,35 @@
 import { useEffect, useState } from "react"
+import Menu from "./Menu"
 import axios from "axios"
-import { API } from '../../api/api.js'
+import { API } from "../../api/api.js"
+
+
 
 export default function MenuUI() {
-    const [menu, setMenu] = useState([])
     const [time, setTime] = useState(new Date());
-    // ====
+    const [status, setStatus] = useState("open")
+    const [loading, setLoading] = useState(true)
 
-    const fetchMenu = async () => {
-        try {
-            const res = await axios.get(`${API}/menu`)
-            setMenu(res.data.data) //  ONLY ARRAY
-            // console.log(res.data)
-        } catch (err) {
-            console.log(err)
-        }
-    }
 
+    // this is for fetching status of the site meaning whether the hotel is open or closed
     useEffect(() => {
-        fetchMenu()
+        const fetchStatus = async () => {
+            try {
+                const res = await axios.get(`${API}/status`)
+                // console.log("Fetched status:", res.data.siteStatus)
+                setStatus(res.data.siteStatus)
+            } catch (err) {
+                console.error("Failed to fetch status", err)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        fetchStatus()
     }, [])
 
+
+    //this is for time
     useEffect(() => {
         const interval = setInterval(() => {
             setTime(new Date());
@@ -29,6 +38,15 @@ export default function MenuUI() {
         return () => clearInterval(interval);
 
     }, [])
+
+
+    if (loading) {
+        return (
+            <div className="h-screen flex items-center justify-center">
+                Loading...
+            </div>
+        )
+    }
 
 
     return (
@@ -51,9 +69,17 @@ export default function MenuUI() {
                     <p className="text-lg opacity-90">घरगुती जेवण</p>
 
                     <div className="mt-4 flex items-center gap-3">
-                        <span className="px-4 py-1 bg-green-500 rounded-full text-sm font-semibold">
-                            Open
+                        <span
+                            className={`px-4 py-1 rounded-full text-sm font-semibold ${status === "open"
+                                ? "bg-green-500"
+                                : "bg-red-500"
+                                }`}
+                        >
+                            {status === "open" ? "Open" : "Closed"}
                         </span>
+
+
+                        {/*time and date */}
                         <span className="text-sm opacity-80">
                             <div className="text-sm text-gray-200">
                                 Updated:{" "}
@@ -75,311 +101,29 @@ export default function MenuUI() {
 
             </div>
 
-            {/* MENU SECTION */}
+            {/* MAIN CONTENT */}
+            <div className="relative max-w-6xl mx-auto p-6 mt-8">
 
-            <div className="max-w-7xl mx-auto px-4 mt-10">
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-
-                    {/* Menu Card */}
-                    <div className="border rounded-xl p-5 mb-4">
-                        {menu.map((m) => (
-                            <div
-                                key={m._id}
-                                className="flex justify-between items-start rounded-xl "
-                            >
-                                <div className="w-full">
-                                    <h3 className="text-xl font-semibold">राईस प्लेट </h3>
-
-                                    <div className="flex gap-2 mt-2">
-                                        <span className="bg-gray-100 px-2 py-1 rounded-full text-xs">
-                                            Limited
-                                        </span>
-                                        <span className="bg-green-100 px-2 py-1 rounded-full text-xs">
-                                            {m.status}
-                                        </span>
-                                    </div>
-
-
-                                    <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                                        {m.items?.map((val, i) => (
-                                            <li key={i}>• {val}</li>
-                                        ))}
-                                    </ul>
-
-                                </div>
-                                <div className="text-xl font-bold text-orange-600">
-                                    ₹60
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="border rounded-xl p-5 mb-4">
-                        {menu.map((m) => (
-                            <div
-                                key={m._id}
-                                className="flex justify-between items-start rounded-xl "
-                            >
-                                <div className="w-full">
-                                    <h3 className="text-xl font-semibold">चपाती भाजी </h3>
-
-                                    <div className="flex gap-2 mt-2">
-                                        <span className="bg-gray-100 px-2 py-1 rounded-full text-xs">
-                                            Limited
-                                        </span>
-                                        <span className="bg-green-100 px-2 py-1 rounded-full text-xs">
-                                            {m.status}
-                                        </span>
-                                    </div>
-
-
-                                    <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                                        {m.items?.map((val, i) => (
-                                            <li key={i}>• {val}</li>
-                                        ))}
-                                    </ul>
-                                    <ul className="mt-1 text-sm text-gray-600 space-y-1">
-                                        <li>•3 चपाती </li>
-                                    </ul>
-
-                                </div>
-                                <div className="text-xl font-bold text-orange-600">
-                                    ₹60
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-
-                    <div className="border rounded-xl p-5 mb-4 hover:shadow-md transition">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-xl font-semibold flex items-center gap-2">
-                                    दाल राईस
-
-                                    {/* <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-sm">
-                    ⭐
-                  </span> */}
-                                </h3>
-
-                                {/* <p className="text-sm text-gray-500 mt-1">
-                  ⭐ 4.9 · 7 ratings
-                </p> */}
-
-                                <div className="flex gap-2 mt-2">
-                                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                                        Limited
-                                    </span>
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                                        Available
-                                    </span>
-                                </div>
-
-
-                            </div>
-
-                            <div className="text-xl font-bold text-orange-600">
-                                ₹50
-                            </div>
+                {/*  CLOSED OVERLAY */}
+                {status === "closed" && (
+                    <div className="absolute inset-0 mt-[8vw] z-20 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-lg">
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow-lg text-center">
+                            <h2 className="text-xl font-bold">🚫 Hotel is currently closed</h2>
+                            <p className="text-sm mt-1">
+                                Our kitchen is not serving right now. Please check back a little later 😊
+                            </p>
                         </div>
                     </div>
+                )}
 
+                {/* MENU CONTENT */}
+                <div
+                    className={`${status === "closed" ? "pointer-events-none opacity-50" : ""
+                        }`}
+                >
+                    {/* YOUR MENU / CARDS / ITEMS HERE */}
                 </div>
-            </div>
 
-
-            {/* regular menu section */}
-
-
-
-            <div className="max-w-7xl mx-auto px-4 mt-10">
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-
-
-                    {/* Menu Card */}
-                    <div className="border rounded-xl p-5 mb-4 hover:shadow-md transition">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-xl font-semibold flex items-center gap-2">
-                                    चिकन थाळी
-                                    {/* <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-sm">
-                    ⭐
-                  </span> */}
-                                </h3>
-
-                                {/* <p className="text-sm text-gray-500 mt-1">
-                  ⭐ 4.9 · 7 ratings
-                </p> */}
-
-                                <div className="flex gap-2 mt-2">
-                                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                                        Unlimited
-                                    </span>
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                                        Available
-                                    </span>
-                                </div>
-
-                                <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                                    <li>• चिकन 4 piece</li>
-                                    <li>• चपाती / भाकरी Unlimited</li>
-                                    <li>• राईस Unlimited</li>
-                                    <li>• रस्सा Unlimited</li>
-                                </ul>
-                            </div>
-
-                            <div className="text-xl font-bold text-orange-600">
-                                ₹150
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="border rounded-xl p-5 mb-4 hover:shadow-md transition">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-xl font-semibold flex items-center gap-2">
-                                    अंडा  थाळी
-                                    {/* <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-sm">
-                    ⭐
-                  </span> */}
-                                </h3>
-
-                                {/* <p className="text-sm text-gray-500 mt-1">
-                  ⭐ 4.9 · 7 ratings
-                </p> */}
-
-                                <div className="flex gap-2 mt-2">
-                                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                                        Unlimited
-                                    </span>
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                                        Available
-                                    </span>
-                                </div>
-
-                                <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                                    <li>• 2  Eggs</li>
-                                    <li>• चपाती / भाकरी Unlimited</li>
-                                    <li>• राईस Unlimited</li>
-                                    <li>• रस्सा Unlimited</li>
-                                </ul>
-                            </div>
-
-                            <div className="text-xl font-bold text-orange-600">
-                                ₹120
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="border rounded-xl p-5 mb-4 hover:shadow-md transition">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-xl font-semibold flex items-center gap-2">
-                                    बॉइल भुर्जी
-                                    {/* <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-sm">
-                    ⭐
-                  </span> */}
-                                </h3>
-
-                                {/* <p className="text-sm text-gray-500 mt-1">
-                  ⭐ 4.9 · 7 ratings
-                </p> */}
-
-                                <div className="flex gap-2 mt-2">
-                                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                                        Unlimited
-                                    </span>
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                                        Available
-                                    </span>
-                                </div>
-
-                                <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                                    <li>• 2 Eggs</li>
-                                    <li>• 3 चपाती </li>
-                                </ul>
-                            </div>
-
-                            <div className="text-xl font-bold text-orange-600">
-                                ₹80
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div className="border rounded-xl p-5 mb-4 hover:shadow-md transition">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-xl font-semibold flex items-center gap-2">
-                                    ऑम्लेट चपाती
-
-                                    {/* <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-sm">
-                    ⭐
-                  </span> */}
-                                </h3>
-
-                                {/* <p className="text-sm text-gray-500 mt-1">
-                  ⭐ 4.9 · 7 ratings
-                </p> */}
-
-                                <div className="flex gap-2 mt-2">
-                                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                                        Unlimited
-                                    </span>
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                                        Available
-                                    </span>
-                                </div>
-
-                                <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                                    <li>• 2 Eggs</li>
-                                    <li>•3 चपाती</li>
-                                </ul>
-                            </div>
-
-                            <div className="text-xl font-bold text-orange-600">
-                                ₹70
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div className="border rounded-xl p-5 mb-4 hover:shadow-md transition">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-xl font-semibold flex items-center gap-2">
-                                    भुर्जी चपाती
-                                    {/* <span className="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-sm">
-                    ⭐
-                  </span> */}
-                                </h3>
-
-                                {/* <p className="text-sm text-gray-500 mt-1">
-                  ⭐ 4.9 · 7 ratings
-                </p> */}
-
-                                <div className="flex gap-2 mt-2">
-                                    <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
-                                        Unlimited
-                                    </span>
-                                    <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                                        Available
-                                    </span>
-                                </div>
-
-                                <ul className="mt-3 text-sm text-gray-600 space-y-1">
-                                    <li>• 2 Eggs</li>
-                                    <li>•3 चपाती</li>
-                                </ul>
-                            </div>
-
-                            <div className="text-xl font-bold text-orange-600">
-                                ₹70
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
 

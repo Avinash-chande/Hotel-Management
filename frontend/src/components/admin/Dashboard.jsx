@@ -10,8 +10,34 @@ import {
   Settings,
   LogOut
 } from 'lucide-react';
+import axios from "axios"
+import { API } from '../../api/api.js';
+import { useNavigate } from 'react-router-dom';
 
 const AdminPanel = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API}/api/logout`, {}, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        }
+      });
+    } catch (err) {
+      console.warn("Logout API failed, forcing logout", err);
+    } finally {
+      //  ALWAYS clear auth & redirect
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+      navigate("/admin/login", { replace: true });
+    }
+  };
+
+
+
+
+
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100 font-sans">
       {/* SIDEBAR */}
@@ -22,7 +48,12 @@ const AdminPanel = () => {
 
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
           <SidebarItem icon={<LayoutDashboard size={20} />} label="Dashboard" active />
-          <Link to={"/admin/update"}><SidebarItem icon={<UtensilsCrossed size={20} />} label="Menu Management" /></Link>
+          <Link to="/admin/update">
+            <SidebarItem
+              icon={<UtensilsCrossed />}
+              label="Menu Management"
+            />
+          </Link>
 
           <SidebarItem icon={<Users size={20} />} label="Students" />
           <SidebarItem icon={<CreditCard size={20} />} label="Payments" />
@@ -33,7 +64,7 @@ const AdminPanel = () => {
         </nav>
 
         <div className="p-4 border-t border-gray-700">
-          <button className="w-full flex items-center p-3 text-red-400 hover:bg-red-900/30 rounded-lg transition">
+          <button onClick={handleLogout} className="w-full flex items-center p-3 text-red-400 hover:bg-red-900/30 rounded-lg transition">
             <LogOut size={20} className="mr-3" /> Logout
           </button>
         </div>

@@ -57,27 +57,6 @@ export default function AdminMenu() {
     }
   }
 
-  //on/off items
-  const toggleHardcoded = async () => {
-    const res = await axios.put(
-      "http://localhost:3000/api/settings/admin/toggle-hardcoded-menu",
-      {},
-      { withCredentials: true }
-    )
-    console.log(res)
-
-    setShowHardcoded(res.data.value)
-  }
-
-
-  useEffect(() => {
-    axios.get(`${import.meta.env.VITE_BACKEND_API}/settings/show-hardcoded`)
-      .then(res => setShowHardcoded(res.data.value))
-  }, [])
-
-
-
-
 
   return (
     <>
@@ -287,26 +266,11 @@ export default function AdminMenu() {
                 </ul>
               </div>
 
-              <button
-                onClick={toggleHardcoded}
-                className="bg-green-500 text-white px-4 py-1 rounded"
-              >
-                {showHardcoded ? "Hide on Home" : "Show on Home"}
-              </button>
-
               <div className="text-xl font-bold text-orange-600">
                 ₹150
               </div>
             </div >
           </div >
-
-
-
-
-
-
-
-
 
         </div >
       </div >

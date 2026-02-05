@@ -20,14 +20,13 @@ app.use(cookieParser())
 //import routes
 import userRouter from './routes/user.routes.js'
 import menuRouter from './routes/menu.routes.js'
-import settingRouter from './routes/setting.routes.js'
-
+import siteStatusRoutes from "./routes/siteStatus.routes.js"
 
 //declare the routes
 app.use("/api/auth", userRouter)
 app.use("/api/menu", menuRouter)
 
-app.use("/api/settings", settingRouter)
+app.use("/api", siteStatusRoutes)
 
 
 

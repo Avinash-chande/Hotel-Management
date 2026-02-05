@@ -1,5 +1,6 @@
 import axios from "axios"
-export const API = import.meta.env.VITE_BACKEND_API
+export const API =import.meta.env.VITE_BACKEND_API;;
+
 
 
 export const adminSignup = async (data) => {
