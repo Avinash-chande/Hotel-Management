@@ -96,9 +96,6 @@ export const toggleMenuVisibility = async (req, res) => {
     res.status(200).json(menu)
 }
 
-
-
-
 export {
     addMenu,
     getMenu,

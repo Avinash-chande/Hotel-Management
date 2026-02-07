@@ -7,6 +7,7 @@ import { API } from "../../api/api.js"
 
 export default function MenuUI() {
     const [time, setTime] = useState(new Date());
+    const [hotelName, setHotelName] = useState("");
     const [status, setStatus] = useState("open")
     const [loading, setLoading] = useState(true)
 
@@ -15,9 +16,14 @@ export default function MenuUI() {
     useEffect(() => {
         const fetchStatus = async () => {
             try {
-                const res = await axios.get(`${API}/status`)
-                // console.log("Fetched status:", res.data.siteStatus)
-                setStatus(res.data.siteStatus)
+                const res = await axios.get(`${API}/admin/settings`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+                    }
+                });
+                // console.log("Fetched status:", res.data.isOpen)
+                setStatus(res.data.isOpen ? "open" : "closed")
+                setHotelName(res.data.hotelName)
             } catch (err) {
                 console.error("Failed to fetch status", err)
             } finally {
@@ -64,8 +70,9 @@ export default function MenuUI() {
 
                 <div className="relative z-10 h-full flex flex-col items-center justify-center text-white text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-2">
-                        होटल धरमरराज
+                        {hotelName || "Loading..."}
                     </h1>
+
                     <p className="text-lg opacity-90">घरगुती जेवण</p>
 
                     <div className="mt-4 flex items-center gap-3">

@@ -2,11 +2,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import AdminSignup from "./components/admin/Signup"
 import AdminLogin from "./components/admin/Login"
 import Update from "./components/admin/Update"
-import EditMenu from "./components/admin/EditMenu"
 import Home from "./components/user/Home"
 import NotFound from './components/NotFound'
 import ProtectedRoute from "./components/ProtectedRoute"
-import AdminPanels from "./components/admin/adminPanels"
+import Dashboard from "./components/admin/Dashboard"
 
 export default function App() {
   return (
@@ -21,9 +20,8 @@ export default function App() {
 
         {/* protected routes */}
         <Route element={<ProtectedRoute />}>
-          <Route path="admin/panels" element={<AdminPanels/>} />
+          <Route path="admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/update" element={<Update />} />
-          <Route path="/admin/edit/:id" element={<EditMenu />} />
         </Route>
 
         {/*  Catch all wrong routes */}

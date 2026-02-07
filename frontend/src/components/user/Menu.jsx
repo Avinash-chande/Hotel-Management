@@ -12,7 +12,7 @@ function Menu() {
         try {
             const res = await axios.get(`${API}/menu`)
             setMenu(res.data.data) //  ONLY ARRAY
-            console.log(res.data)
+            // console.log(res.data)
         } catch (err) {
             console.log(err)
         }
@@ -91,6 +91,12 @@ function Menu() {
             {/* Regular  Fiexd menu section */}
             <div>
                 <div className="max-w-7xl mx-auto px-4 mt-10 ">
+                    <div className="text-center m-10">
+                        <h1 className="text-3xl font-bold font-merienda ">Regular Thali Specials</h1>
+                        <h4 className="text-gray-500  font-poppins">
+                            Fresh, filling, and satisfying meals
+                        </h4>
+                    </div>
                     <div className="bg-white rounded-2xl shadow-lg p-6 ">
 
                         {/* SINGLE CARD */}
@@ -132,7 +138,7 @@ function Menu() {
                                         </div>
 
                                         {/* DIVIDER */}
-                                        {index !== menu.length - 1 && (
+                                        {index !== regularMenu.length - 1 && (
                                             <hr className="border-gray-200" />
                                         )}
 
