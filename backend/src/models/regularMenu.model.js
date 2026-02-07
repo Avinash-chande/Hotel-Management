@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const menuSchema = new Schema({
+const regularMenuSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -32,4 +32,4 @@ const menuSchema = new Schema({
     }
 }, { timestamps: true })
 
-export const Menu = mongoose.model("Menu", menuSchema)
+export const RegularMenu = mongoose.model("RegularMenu", regularMenuSchema)

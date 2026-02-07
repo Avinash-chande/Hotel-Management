@@ -30,13 +30,13 @@ export default function EditMenu(){
       <h3 className="text-xl font-bold mb-4">Edit Menu</h3>
 
       <form onSubmit={update} className="space-y-4">
-        <input
+        <input placeholder="enter name "
           value={form.name}
           className="w-full border p-2 rounded"
           onChange={e=>setForm({...form,name:e.target.value})}
         />
 
-        <input
+        <input placeholder="enter the price"
           value={form.price}
           className="w-full border p-2 rounded"
           onChange={e=>setForm({...form,price:e.target.value})}

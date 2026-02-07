@@ -1,12 +1,12 @@
 import React from 'react'
-import AdminHero from './adminHero'
+import AdminHero from './AdminHero'
 import Dashboard from './Dashboard'
 
 function AdminPanels() {
   return (
     <div>
       <AdminHero />
-      <Dashboard/>
+      <Dashboard />
 
     </div>
   )

@@ -33,11 +33,6 @@ const AdminPanel = () => {
       navigate("/admin/login", { replace: true });
     }
   };
-
-
-
-
-
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100 font-sans">
       {/* SIDEBAR */}

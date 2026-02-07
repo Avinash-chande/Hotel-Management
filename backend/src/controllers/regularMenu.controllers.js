@@ -1,4 +1,4 @@
-import { Menu } from "../models/menu.model.js"
+import { RegularMenu } from "../models/regularMenu.model.js"
 import asyncHandler from "../utils/asyncHandler.js"
 import ApiResponse from "../utils/ApiResponse.js"
 import ApiErrors from "../utils/ApiError.js"
@@ -11,11 +11,11 @@ const addMenu = asyncHandler(async (req, res) => {
         throw new ApiErrors(400, "Name and price are required");
     }
 
-    const menu = await Menu.create({
+    const menu = await RegularMenu.create({
         name,
         price,
-        status,
-        portionType,
+        status: status.toUpperCase(),
+        portionType: portionType.toLowerCase(),
         items
     });
 
@@ -27,7 +27,7 @@ const addMenu = asyncHandler(async (req, res) => {
 
 // GET MENU (public)
 const getMenu = async (req, res) => {
-    const menu = await Menu.find().sort({ createdAt: -1 })
+    const menu = await RegularMenu.find().sort({ createdAt: -1 })
 
     if (!menu) {
         throw new ApiErrors(400, 'menu not found fetched')
@@ -50,7 +50,7 @@ const updateMenu = async (req, res) => {
 
         const { items, name, price, status, portionType } = req.body
 
-        const updatedMenu = await Menu.findByIdAndUpdate(
+        const updatedMenu = await RegularMenu.findByIdAndUpdate(
             req.params.id,
             { items, name, price, status, portionType },
             { new: true }
@@ -69,7 +69,7 @@ const updateMenu = async (req, res) => {
 
 // DELETE MENU
 const deleteMenu = asyncHandler(async (req, res) => {
-    const menu = await Menu.findByIdAndDelete(req.params.id);
+    const menu = await RegularMenu.findByIdAndDelete(req.params.id);
 
     if (!menu) {
         throw new ApiErrors(404, "Menu not found");
@@ -85,7 +85,7 @@ const deleteMenu = asyncHandler(async (req, res) => {
 export const toggleMenuVisibility = async (req, res) => {
     const { id } = req.params
 
-    const menu = await Menu.findById(id)
+    const menu = await RegularMenu.findById(id)
     if (!menu) {
         return res.status(404).json({ message: "Menu not found" })
     }

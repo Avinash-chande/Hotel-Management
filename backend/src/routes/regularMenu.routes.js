@@ -6,7 +6,7 @@ import {
     updateMenu,
     deleteMenu,
     toggleMenuVisibility,
-} from '../controllers/menu.controllers.js'
+} from '../controllers/regularMenu.controllers.js'
 import { verifyJWT } from '../middleware/auth.middleware.js';
 
 const router = Router()

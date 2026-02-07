@@ -15,7 +15,7 @@ function Home() {
     <div>
       <Body />
       <Footer />
-    
+
     </div>
   )
 }

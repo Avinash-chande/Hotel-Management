@@ -102,28 +102,27 @@ export default function MenuUI() {
             </div>
 
             {/* MAIN CONTENT */}
-            <div className="relative max-w-6xl mx-auto p-6 mt-8">
-
-                {/*  CLOSED OVERLAY */}
-                {status === "closed" && (
-                    <div className="absolute inset-0 mt-[8vw] z-20 flex items-center justify-center bg-white/80 backdrop-blur-sm rounded-lg">
-                        <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow-lg text-center">
-                            <h2 className="text-xl font-bold">🚫 Hotel is currently closed</h2>
-                            <p className="text-sm mt-1">
-                                Our kitchen is not serving right now. Please check back a little later 😊
-                            </p>
-                        </div>
-                    </div>
-                )}
-
-                {/* MENU CONTENT */}
-                <div
-                    className={`${status === "closed" ? "pointer-events-none opacity-50" : ""
-                        }`}
-                >
-                    {/* YOUR MENU / CARDS / ITEMS HERE */}
+            <div className="relative mt-8">
+                {/* BLURRED MENU */}
+                <div className={`${status === "closed" ? "blur-sm pointer-events-none" : ""}`}>
+                    <Menu />
                 </div>
 
+                {/* CENTER OVERLAY MESSAGE */}
+                {status === "closed" && (
+                    <div className="absolute inset-0 flex items-center justify-center z-20">
+                        <div className="bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-xl shadow-lg text-center w-full max-w-xl mx-4">
+                            <h2 className="font-bold text-lg flex items-center justify-center gap-2">
+                                🚫 Hotel is currently closed
+                            </h2>
+
+                            <p className="text-sm mt-2 sm:whitespace-nowrap">
+                                Our kitchen is not serving right now. Please check back a little later 🙂
+                            </p>
+                        </div>
+
+                    </div>
+                )}
             </div>
 
 
