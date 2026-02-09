@@ -6,7 +6,7 @@ import Home from "./components/user/Home"
 import NotFound from './components/NotFound'
 import ProtectedRoute from "./components/ProtectedRoute"
 import Dashboard from "./components/admin/Dashboard"
-
+import Students from "./components/admin/Students"
 export default function App() {
   return (
     <BrowserRouter>
@@ -22,6 +22,7 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/update" element={<Update />} />
+          <Route path="/admin/students" element={<Students />} />
         </Route>
 
         {/*  Catch all wrong routes */}

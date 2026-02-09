@@ -30,7 +30,6 @@ export default function MenuUI() {
                 setLoading(false)
             }
         }
-
         fetchStatus()
     }, [])
 

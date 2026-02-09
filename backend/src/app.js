@@ -23,6 +23,7 @@ import menuRouter from './routes/menu.routes.js'
 import regularMenuRouter from './routes/regularMenu.routes.js'
 
 import AdminSettingsModal from "./routes/adminSettings.routes.js";
+import studentRoutes from "./routes/student.routes.js";
 
 //declare the routes
 app.use("/api/auth", userRouter)
@@ -30,6 +31,9 @@ app.use("/api/menu", menuRouter)
 app.use("/api/regular-menu", regularMenuRouter)
 
 app.use("/api", AdminSettingsModal)
+app.use("/api/students", studentRoutes);
+
+
 
 
 
