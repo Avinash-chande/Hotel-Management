@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { API } from "../../api/api";
+import { API } from "../../../api/api";
 
 const AddStudentModal = ({ onClose }) => {
   const [form, setForm] = useState({

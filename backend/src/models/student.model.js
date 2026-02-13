@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const studentSchema = new mongoose.Schema(
   {
     name: {
@@ -29,11 +28,10 @@ const studentSchema = new mongoose.Schema(
     isActive: {
       type: Boolean,
       default: true
-    }
-  },
-  {
-    timestamps: true
-  }
+    },
+  }, {
+  timestamps: true
+}
 );
 
 export default mongoose.model("Student", studentSchema);

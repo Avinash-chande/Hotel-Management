@@ -26,14 +26,17 @@ import AdminSettingsModal from "./routes/adminSettings.routes.js";
 import studentRoutes from "./routes/student.routes.js";
 
 //declare the routes
+
+//this is open and closed app
+app.use("/api", AdminSettingsModal);
+
+//this is admin login
 app.use("/api/auth", userRouter)
 app.use("/api/menu", menuRouter)
 app.use("/api/regular-menu", regularMenuRouter)
 
-app.use("/api", AdminSettingsModal)
+
 app.use("/api/students", studentRoutes);
-
-
 
 
 

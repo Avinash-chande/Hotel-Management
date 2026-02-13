@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -16,11 +16,26 @@ import AdminSettingsModal from "./AdminSettingsModal";
 
 
 const AdminPanel = () => {
+
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
 
+  const [totalStudents, setTotalStudents] = useState(0);
 
+  const fetchStudentCount = async () => {
+    try {
+      const res = await axios.get(`${API}/students/count`);
+      console.log(res.data.count);
+      setTotalStudents(res.data.count);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchStudentCount();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -43,6 +58,8 @@ const AdminPanel = () => {
   };
 
   return (
+
+
     <div className="relative flex h-screen overflow-hidden bg-[#F5F2EB] font-sans">
 
       {/* SIDEBAR */}
@@ -68,7 +85,10 @@ const AdminPanel = () => {
             <SidebarItem icon={<UtensilsCrossed size={20} />} label="Menu Management" />
           </Link>
 
-          <SidebarItem icon={<Users size={20} />} label="Students" onClick={() => setSidebarOpen(false)} />
+          <Link to="/admin/students" onClick={() => setSidebarOpen(false)}>
+            <SidebarItem icon={<Users size={20} />} label="Students" />
+          </Link>
+
           <SidebarItem icon={<CreditCard size={20} />} label="Payments" onClick={() => setSidebarOpen(false)} />
           <SidebarItem icon={<Package size={20} />} label="Orders" onClick={() => setSidebarOpen(false)} />
           <SidebarItem icon={<CalendarCheck size={20} />} label="Attendance" onClick={() => setSidebarOpen(false)} />
@@ -136,7 +156,7 @@ const AdminPanel = () => {
 
           {/* STATS */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <StatCard label="Total Students" value="1,284" color="border-blue-500" />
+            <StatCard label="Total Students" value={totalStudents} color="border-blue-500" />
             <StatCard label="Today's Revenue" value="$4,520" color="border-green-500" />
             <StatCard label="Pending Orders" value="24" color="border-orange-500" />
             <StatCard label="Attendance Rate" value="94%" color="border-purple-500" />

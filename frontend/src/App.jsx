@@ -1,4 +1,7 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
+import { AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
+
 import AdminSignup from "./components/admin/Signup"
 import AdminLogin from "./components/admin/Login"
 import Update from "./components/admin/Update"
@@ -6,11 +9,14 @@ import Home from "./components/user/Home"
 import NotFound from './components/NotFound'
 import ProtectedRoute from "./components/ProtectedRoute"
 import Dashboard from "./components/admin/Dashboard"
-import Students from "./components/admin/Students"
+import Students from "./components/admin/students/Students"
+
 export default function App() {
+  const location = useLocation();
+
   return (
-    <BrowserRouter>
-      <Routes>
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         {/* USER */}
         <Route path="/" element={<Home />} />
 
@@ -28,6 +34,6 @@ export default function App() {
         {/*  Catch all wrong routes */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </AnimatePresence>
   )
 }

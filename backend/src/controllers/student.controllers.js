@@ -38,3 +38,42 @@ export const getAllStudents = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+//  Update student
+export const updateStudent = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const updated = await Student.findByIdAndUpdate(
+            id,
+            req.body,
+            { new: true }
+        );
+
+        res.json(updated);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+//  Delete student
+export const deleteStudent = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        await Student.findByIdAndDelete(id);
+
+        res.json({ message: "Student deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+export const getStudentCount = async (req, res) => {
+    try {
+        const count = await Student.countDocuments();
+        res.json({ success: true, count });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
