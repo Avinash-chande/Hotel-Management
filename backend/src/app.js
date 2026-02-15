@@ -18,7 +18,7 @@ app.use(cookieParser())
 
 
 //import routes 
-import userRouter from './routes/user.routes.js'
+import adminRouter from './routes/admin.routes.js'
 import menuRouter from './routes/menu.routes.js'
 import regularMenuRouter from './routes/regularMenu.routes.js'
 
@@ -31,7 +31,7 @@ import studentRoutes from "./routes/student.routes.js";
 app.use("/api", AdminSettingsModal);
 
 //this is admin login
-app.use("/api/auth", userRouter)
+app.use("/api/auth", adminRouter)
 app.use("/api/menu", menuRouter)
 app.use("/api/regular-menu", regularMenuRouter)
 

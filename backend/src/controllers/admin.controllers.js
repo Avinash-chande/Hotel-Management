@@ -1,7 +1,8 @@
 import asyncHandler from '../utils/asyncHandler.js'
 import ApiError from '../utils/ApiError.js';
-import { User } from '../models/user.model.js'
+import { User } from '../models/admin.model.js'
 import ApiResponse from '../utils/ApiResponse.js'
+import Students from '../models/student.model.js';
 
 export const generateAccessTokenAndRefreshToken = async (userId) => {
     try {
@@ -174,5 +175,36 @@ export const logOut = asyncHandler(async (req, res) => {
         .clearCookie("refreshToken", option)
         .json(new ApiResponse(200, {}, "User logged out"))
 })
+
+
+export const getDashboard = async (req, res) => {
+    try {
+        const students = await Student.find();
+
+        let totalPresents = 0;
+        const totalPossible = students.length * 30;
+
+        students.forEach(student => {
+            const presents = student.attendance.filter(
+                a => a.status === "Present"
+            ).length;
+
+            totalPresents += presents;
+        });
+
+        const attendanceRate = Math.round(
+            (totalPresents / totalPossible) * 100
+        );
+
+        res.json({
+            totalStudents: students.length,
+            attendanceRate
+        });
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 
 

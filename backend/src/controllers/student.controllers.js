@@ -69,11 +69,43 @@ export const deleteStudent = async (req, res) => {
     }
 };
 
-export const getStudentCount = async (req, res) => {
+// Update attendance
+export const updateAttendance = async (req, res) => {
     try {
-        const count = await Student.countDocuments();
-        res.json({ success: true, count });
+        const { attendanceArray } = req.body;
+        const studentId = req.params.id;
+
+        // Calculate count from the array sent by frontend
+        const count = attendanceArray.filter(day => day === true).length;
+
+        const updatedStudent = await Student.findByIdAndUpdate(
+            studentId,
+            {
+                attendanceArray: attendanceArray,
+                attendanceCount: count
+            },
+            { new: true }
+        );
+
+        res.status(200).json({ success: true, student: updatedStudent });
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ error: err.message });
     }
 };
+
+export const getStudentAttendance = async (req, res) => {
+    const student = await Student.findById(req.params.id);
+
+    const totalDays = 30;
+
+    const rate = Math.round(
+        (student.attendanceCount / totalDays) * 100
+    );
+
+    res.json({
+        attendanceCount: student.attendanceCount,
+        totalDays,
+        rate
+    });
+};
+

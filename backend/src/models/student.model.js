@@ -29,9 +29,18 @@ const studentSchema = new mongoose.Schema(
       type: Boolean,
       default: true
     },
-  }, {
-  timestamps: true
-}
+
+    attendanceArray: {
+      type: [Boolean],
+      default: new Array(30).fill(false)
+    },
+
+    // Derived value for the "X / 30" display
+    attendanceCount: { type: Number, default: 0 }
+  },
+  {
+    timestamps: true
+  }
 );
 
 export default mongoose.model("Student", studentSchema);

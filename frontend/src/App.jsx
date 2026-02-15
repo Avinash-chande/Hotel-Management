@@ -9,7 +9,8 @@ import Home from "./components/user/Home"
 import NotFound from './components/NotFound'
 import ProtectedRoute from "./components/ProtectedRoute"
 import Dashboard from "./components/admin/Dashboard"
-import Students from "./components/admin/students/Students"
+import Students from "./components/admin/students/StudentsData"
+import Attendance from "./components/admin/students/Attendance.jsx"
 
 export default function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="admin/dashboard" element={<Dashboard />} />
           <Route path="/admin/update" element={<Update />} />
           <Route path="/admin/students" element={<Students />} />
+          <Route path="/admin/attendance" element={<Attendance />} />
         </Route>
 
         {/*  Catch all wrong routes */}
