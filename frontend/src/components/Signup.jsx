@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { adminSignup } from "../../api/api"
+import { adminSignup } from "../api/api"
 import { Link } from "react-router-dom"
 
 export default function AdminSignup() {
@@ -20,7 +20,7 @@ export default function AdminSignup() {
   const submit = async (e) => {
     e.preventDefault()
     await adminSignup({ name, email, password })
-    alert("Admin created")
+    alert(" Registered successfully! Please log in.")
   }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 to-yellow-50">
@@ -49,19 +49,15 @@ export default function AdminSignup() {
           <button onClick={() => setActive("signin")}
             className={`relative z-10 flex-1 py-2 text-sm font-medium transition
           ${active === "signin" ? "text-orange-600 bg-white border-2 border-amber-400 rounded-2xl shadow-xl" : "text-gray-500"}`}>
-            <Link to="/admin/login">Sign In</Link>
+            <Link to="/login">Sign In</Link>
           </button>
           <button onClick={() => setActive("signup")}
             className={`relative z-10 flex-1 py-2 text-sm font-medium transition
           ${active === "signup" ? "text-orange-600 bg-white border-2 border-amber-400 rounded-2xl shadow-xl" : "text-gray-500"}`}>
-            <Link to="/admin/signup">Sign Up</Link>
+            <Link to="/signup">Sign Up</Link>
           </button>
         </div>
-        {/* Warning */}
-        <p className="text-red-500 text-sm text-center mb-4">
-          New Account creation is currently disabled. If you need admin access
-          please contact the hotel owner to create an account.
-        </p>
+
 
         {/* Form */}
         <form onSubmit={submit} className="space-y-4">
@@ -93,17 +89,14 @@ export default function AdminSignup() {
           </div>
 
           <button
-            type="submit" disabled
-            className="w-full py-2 rounded-lg opacity-80  from-yellow-400 bg-[#F2C08D] text-white font-medium hover:opacity-90 transition"
+            type="submit"
+            className="w-full py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium hover:opacity-90 transition"
           >
             Sign Up
           </button>
         </form>
 
-        {/* Note */}
-        <div className="mt-5 bg-orange-50 text-orange-600 text-sm p-3 rounded-lg text-center">
-          Note: New accounts require admin approval before access is granted.
-        </div>
+
       </div>
     </div>
   );

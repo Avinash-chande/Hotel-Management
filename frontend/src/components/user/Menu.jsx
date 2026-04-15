@@ -21,7 +21,7 @@ function Menu() {
         try {
             const res = await axios.get(`${API}/regular-menu`)
             setRegularMenu(res.data.data) //  ONLY ARRAY
-            console.log(res.data)
+            // console.log(res.data)
         } catch (err) {
             console.log(err)
         }

@@ -17,6 +17,7 @@ import {
 import axios from "axios";
 import { API } from "../../api/api.js";
 import AdminSettingsModal from "./AdminSettingsModal";
+import DashboardOverview from "./DashboardOverview.jsx";
 
 const AdminPanel = () => {
   const navigate = useNavigate();
@@ -59,8 +60,8 @@ const AdminPanel = () => {
       console.warn("Logout failed, forcing logout", err);
     } finally {
       localStorage.removeItem("accessToken");
-      localStorage.removeItem("user");
-      navigate("/admin/login", { replace: true });
+      localStorage.removeItem("admin"); //  FIXED
+      navigate("/login", { replace: true });
     }
   };
 
@@ -145,8 +146,8 @@ const AdminPanel = () => {
 
           <div className="flex items-center gap-4 bg-white p-1.5 pr-4 rounded-full shadow-sm border border-slate-200">
             <img
-              src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff"
-              className="w-8 h-8 rounded-full"
+              src="https://image2url.com/r2/default/images/1771434937611-b6eebad9-e66c-48de-a56f-fd75c4961b89.jpg"
+              className="w-8 h-8 rounded-full object-cover"
               alt="Admin Avatar"
             />
             <div className="hidden sm:block text-sm">
@@ -161,47 +162,28 @@ const AdminPanel = () => {
           {/* STATS */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <StatCard label="Total Students" value={totalStudents} icon={<Users className="text-blue-600" />} accent="bg-blue-500" />
-            <StatCard label="Today's Revenue" value="$4,520" icon={<CreditCard className="text-green-600" />} accent="bg-green-500" />
+            <StatCard label="Total Revenue" value={totalStudents * 4500} icon={<CreditCard className="text-green-600" />} accent="bg-green-500" />
             <StatCard label="Pending Orders" value="24" icon={<ShoppingBag className="text-orange-600" />} accent="bg-orange-500" />
             <StatCard label="Attendance Rate" value={`${dashboard.attendanceRate ?? 0}%`} icon={<CheckCircle className="text-purple-600" />} accent="bg-purple-500" />
           </div>
 
           {/* TABLE */}
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-              <h3 className="font-bold text-slate-800 text-lg">Recent Orders</h3>
-              <button className="text-blue-600 text-sm font-semibold hover:text-blue-700">
-                View All
-              </button>
-            </div>
 
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[600px] text-left">
-                <thead className="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider font-semibold">
-                  <tr>
-                    <th className="px-6 py-4">Order ID</th>
-                    <th className="px-6 py-4">Student</th>
-                    <th className="px-6 py-4">Item</th>
-                    <th className="px-6 py-4">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-                  <TableRow id="#ORD-5521" name="John Doe" item="Spicy Ramen 🍜" status="Completed" />
-                  <TableRow id="#ORD-5522" name="Jane Smith" item="Chicken Curry 🍛" status="Pending" />
-                </tbody>
-              </table>
-            </div>
-          </div>
+
+          <DashboardOverview />
+
         </div>
 
         <AdminSettingsModal
           isOpen={openSettings}
           onClose={() => setOpenSettings(false)}
         />
+
       </main>
     </div>
   );
 };
+
 
 /* REUSABLE COMPONENTS */
 

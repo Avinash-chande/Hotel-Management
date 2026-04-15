@@ -7,7 +7,7 @@ import { isAdmin } from "../middleware/adminauth.middleware.js";
 
 const router = express.Router();
 
-router.get("/admin/settings", isAdmin, getAdminSettings);
-router.put("/admin/settings", isAdmin, updateAdminSettings);
+router.get("/admin/settings", getAdminSettings);
+router.put("/admin/settings", updateAdminSettings);
 
 export default router;

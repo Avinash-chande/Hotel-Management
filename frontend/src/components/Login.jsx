@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { adminLogin } from "../../api/api"
+import { adminLogin } from "../api/api"
 import { Link } from "react-router-dom";
 
 export default function AdminSignup() {
@@ -30,23 +30,27 @@ export default function AdminSignup() {
     try {
       const res = await adminLogin({ email, password });
 
-      console.log(res)
-
-      //  success check
-      if (res.success && res.data.user.role === "admin") {
-        setError("")
-        localStorage.setItem("accessToken", res.data.accessToken)
+      if (res.success) {
+        // 1. Save shared data first to avoid repetition
+        localStorage.setItem("accessToken", res.data.accessToken);
         localStorage.setItem("user", JSON.stringify(res.data.user));
-        // localStorage.setItem("isAdminLoggedIn", "true") // MUST be string
 
-        // redirect admin
-        nav("/admin/dashboard");
+        // 2. Route based on role
+        const userRole = res.data.user.role;
+        // console.log("Logged in user role:", userRole); // Debugging line
+
+        if (userRole === "admin") {
+          nav("/admin/dashboard");
+        } else {
+          // This covers "user" or any other non-admin role
+          nav("/user/home");
+        }
       } else {
-        setError(res.data.message || "You are not authorized to access the admin panel.");
+        setError(res.data.message || "Invalid credentials.");
       }
-
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      // Check if the error is specifically a 401/403 from the server
+      setError(err.response?.data?.message || "Login failed. Please check your connection.");
     } finally {
       setLoading(false);
     }
@@ -79,12 +83,12 @@ export default function AdminSignup() {
           <button onClick={() => setActive("signin")}
             className={`relative z-10 flex-1 py-2 text-sm font-medium transition
           ${active === "signin" ? "text-orange-600 bg-white border-2 border-amber-400 rounded-2xl shadow-xl" : "text-gray-500"}`}>
-            <Link to="/admin/login">Sign In</Link>
+            <Link to="/login">Sign In</Link>
           </button>
           <button onClick={() => setActive("signup")}
             className={`relative z-10 flex-1 py-2 text-sm font-medium transition
           ${active === "signup" ? "text-orange-600 bg-white border-2 border-amber-400 rounded-2xl shadow-xl" : "text-gray-500"}`}>
-            <Link to="/admin/signup">Sign Up</Link>
+            <Link to="/signup">Sign Up</Link>
           </button>
         </div>
 
@@ -125,10 +129,7 @@ export default function AdminSignup() {
           </button>
         </form>
 
-        {/* Note */}
-        <div className="mt-5 bg-orange-50 text-orange-600 text-sm p-3 rounded-lg text-center">
-          Note: New accounts require admin approval before access is granted.
-        </div>
+
       </div>
     </div>
   );

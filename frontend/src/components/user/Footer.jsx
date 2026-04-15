@@ -42,15 +42,7 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Admin Login */}
-      <div className="text-center mt-16">
-        <p className="text-orange-500 font-medium mb-3">
-          Restaurant Management
-        </p>
-        <button className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-8 py-2 rounded-lg shadow hover:scale-105 transition">
-          <Link to="/admin/login">Admin Login</Link>
-        </button>
-      </div>
+
     </footer>
   )
 }

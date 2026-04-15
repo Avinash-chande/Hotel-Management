@@ -20,7 +20,9 @@ const regularMenuSchema = new Schema({
     status: {
         type: String,
         enum: ["available", "unavailable"],
-        default: "available"
+        default: "available",
+        lowercase: true,
+        trim: true
     },
     isVisible: {
         type: Boolean,

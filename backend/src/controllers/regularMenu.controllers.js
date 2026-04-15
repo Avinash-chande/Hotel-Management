@@ -19,7 +19,7 @@ const addMenu = asyncHandler(async (req, res) => {
         items
     });
 
-    return res.status(201).json(
+    return res.status(200).json(
         new ApiResponse(201, menu, "Menu added successfully")
     );
 });
